@@ -48,6 +48,13 @@ else
     echo -e "roboshop user creation...$Y SKIPPING $N "
 fi
 
+id /app
+if [ $? -ne 0 ]
+then mkdir /app
+    VALIDATE $? "creating app directory"
+else 
+    echo -e "creating app ...$Y SKIPPING $N"
+
 mkdir /app
 VALIDATE $? "app directory"
 
@@ -67,7 +74,7 @@ VALIDATE $? "Installing catalogue file"
 cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.service
 VALIDATE $? "Creating catalogue service"
 
-mongo --host mongodb.murralii.online </app/schema/catalogue.js
+mongo --host mongodb.murralii.online  /app/schema/catalogue.js
 
 
 
