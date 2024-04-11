@@ -28,15 +28,49 @@ else
     echo "You are root user"
 fi
 
-for package in $@
-do 
-    yum list installed $package -y  &>> $LOGFILE
-    if [ $? -ne 0 ]
-    then 
-        yum install $package -y &>> $LOGFILE
-        VALIDATE $? "Installing..."  
-    else 
-        echo -e "$package is already installed... $Y SKIPPING $N"
-    fi
 
-done
+dnf module disable nodejs -y  &>> $LOGFILE
+VALIDATE $? "disabling nodejs default version"
+
+dnf module enable nodejs:18 -y  &>> $LOGFILE
+VALIDATE $? "enabling nodejs:18 version"
+
+dnf install nodejs -y  &>> $LOGFILE
+VALIDATE $? "installing nodejs:18 version"
+
+id roboshop
+
+if [ $? -ne 0 ]
+then
+    useradd roboshop
+    VALIDATE $? "creating roboshop user"
+else 
+    echo -e "roboshop user creation...$Y SKIPPING $N "
+fi
+
+mkdir /app
+VALIDATE $? "app directory"
+
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+VALIDATE $? "Downloading the catalogue application"
+
+cd /app 
+
+unzip /tmp/catalogue.zip
+VALIDATE $? "unzipping the catalogue file"
+
+cd /app
+
+npm install 
+VALIDATE $? "Installing catalogue file"
+
+cp /home/centos/roboshop-shell /etc/systemd/system/catalogue.service
+VALIDATE $? "Creating catalogue service"
+
+mongo --host mongodb.murralii.online </app/schema/catalogue.js
+
+
+
+
+
+
