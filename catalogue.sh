@@ -30,4 +30,13 @@ fi
 
 yum install git -y &>> $LOGFILE
 
+if [ $? -ne 0 ]
+then 
+    echo -e " $N Insatalling ...$N "
+    exit 1
+else 
+    echo -e "Installing ...$Y SKIPPING $N"
+fi
+
+
 VALIDATE $? "Installing git" 
