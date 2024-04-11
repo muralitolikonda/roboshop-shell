@@ -64,7 +64,7 @@ cd /app
 npm install 
 VALIDATE $? "Installing catalogue file"
 
-cp /home/centos/roboshop-shell /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.service
 VALIDATE $? "Creating catalogue service"
 
 mongo --host mongodb.murralii.online </app/schema/catalogue.js
