@@ -28,28 +28,15 @@ else
     echo "You are root user"
 fi
 
-yum install git -y &>> $LOGFILE
+for package in $@
+do 
+    yum list installed $package -y  &>> $LOGFILE
+    if [ $? -ne 0 ]
+    then 
+        yum install $package -y &>> $LOGFILE
+        VALIDATION $? "Installing..."  
+    else 
+        echo -e "$package is already installed... $Y SKIPPING $N"
+    fi
 
-if [ $? -ne 0 ]
-then 
-    echo -e " $N Insatalling ...$N "
-    exit 1
-else 
-    echo -e "Installing ...$Y SKIPPING $N"
-fi
-
-
-VALIDATE $? "Installing git" 
-
-yum install mysql -y &>> $LOGFILE
-
-if [ $? -ne 0 ]
-then 
-    echo -e " $N Insatalling ...$N "
-    exit 1
-else 
-    echo -e "Installing ...$Y SKIPPING $N"
-fi
-
-
-VALIDATE $? "Installing mysql" 
+done
