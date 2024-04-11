@@ -68,17 +68,22 @@ cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.
 VALIDATE $? "Creating catalogue service"
 
 systemctl daemon-reload
+VALIDATE $? "Reloading the catalogue file"
 
 systemctl enable catalogue
+VALIDATE $? "Enabling catalogue"
 
 systemctl start catalogue
+VALIDATE $? "Starting catalogue"
 
 cp /home/centos/roboshop-shell/mongo.repo  /etc/yum.repos.d/mongo.repo
+VALIDATE $? "copied the mongo repo"
 
 dnf install mongodb-org-shell -y
+VALIDATE $? "Installing mongo shell"
 
 mongo --host mongodb.murralii.online  /app/schema/catalogue.js
-
+VALIDATE $? "enabling remote access"
 
 
 
