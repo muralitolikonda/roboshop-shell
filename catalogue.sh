@@ -67,6 +67,16 @@ VALIDATE $? "Installing catalogue file"
 cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.service
 VALIDATE $? "Creating catalogue service"
 
+systemctl daemon-reload
+
+systemctl enable catalogue
+
+systemctl start catalogue
+
+cp /home/centos/roboshop-shell/mongo.repo  /etc/yum.repos.d/mongo.repo
+
+dnf install mongodb-org-shell -y
+
 mongo --host mongodb.murralii.online  /app/schema/catalogue.js
 
 
