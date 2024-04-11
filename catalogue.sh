@@ -82,7 +82,7 @@ VALIDATE $? "copied the mongo repo"
 dnf install mongodb-org-shell -y
 VALIDATE $? "Installing mongo shell"
 
-mongo --host mongodb.murralii.online  /app/schema/catalogue.js
+mongo --host mongodb.murralii.online </app/schema/catalogue.js
 VALIDATE $? "enabling remote access"
 
 
