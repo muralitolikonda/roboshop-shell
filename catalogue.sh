@@ -48,14 +48,7 @@ else
     echo -e "roboshop user creation...$Y SKIPPING $N "
 fi
 
-id /app
-if [ $? -ne 0 ]
-then mkdir /app
-    VALIDATE $? "creating app directory"
-else 
-    echo -e "creating app ...$Y SKIPPING $N"
-
-mkdir /app
+mkdir -p /app
 VALIDATE $? "app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
@@ -63,7 +56,7 @@ VALIDATE $? "Downloading the catalogue application"
 
 cd /app 
 
-unzip /tmp/catalogue.zip
+unzip -o /tmp/catalogue.zip
 VALIDATE $? "unzipping the catalogue file"
 
 cd /app
@@ -75,6 +68,8 @@ cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.
 VALIDATE $? "Creating catalogue service"
 
 mongo --host mongodb.murralii.online  /app/schema/catalogue.js
+
+
 
 
 
