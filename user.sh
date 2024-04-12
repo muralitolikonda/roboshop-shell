@@ -64,7 +64,7 @@ cd /app
 npm install  &>> $LOGFILE
 VALIDATE $? "intalling user"
 
-cp /home/centos/roboshop-shell/user.service  etc/systemd/system/user.service  &>> $LOGFILE
+cp /home/centos/roboshop-shell/user.service  /etc/systemd/system/user.service  &>> $LOGFILE
 VALIDATE $? "coping user.service"
 
 systemctl daemon-reload  &>> $LOGFILE
@@ -82,7 +82,7 @@ VALIDATE $? "coping mongo repo"
 dnf install mongodb-org-shell -y   &>> $LOGFILE
 VALIDATE $? "installing mongodb shell"
 
-mongo --host mongodb.murralii.online /app/schema/user.js &>> $LOGFILE
+mongo --host mongodb.murralii.online >/app/schema/user.js &>> $LOGFILE
 VALIDATE $? "giving remote access to mongodb"
 
 
