@@ -39,14 +39,21 @@ dnf install nodejs -y  &>> $LOGFILE
 VALIDATE $? "installing nodejs"
 
 
-useradd roboshop
-VALIDATE  $? "creating roboshop user"
+id roboshop
+
+if [ $? -ne 0 ]
+then
+    useradd roboshop
+    VALIDATE $? "creating roboshop user"
+else 
+    echo -e "roboshop user creation...$Y SKIPPING $N "
+fi
 
 
 mkdir -p /app  &>> $LOGFILE
 VALIDATE $? "creating app directory"
 
-curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
+curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
 VALIDATE $? "downloading the cart" 
 
 cd /app  &>> $LOGFILE
