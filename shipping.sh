@@ -78,7 +78,7 @@ VALIDATE $? "starting shipping"
 dnf install mysql -y   &>> $LOGFILE
 VALIDATE $? "installing mysql"
 
-mysql -h mysql.murralii.online -uroot -pRoboShop@1 < /app/schema/shipping.sql  &>> $LOGFILE
+mysql -h mysql.murralii.online -uroot -pRoboShop@1  /app/schema/shipping.sql  &>> $LOGFILE
 VALIDATE $? "creating user and password"
 
 systemctl restart shipping  &>> $LOGFILE
