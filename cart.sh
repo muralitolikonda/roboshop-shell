@@ -30,16 +30,18 @@ else
 fi
 
 dnf module disable nodejs -y &>> $LOGFILE
-VALIDATE $? "disabling default nodejs"
 
-dnf module enable nodejs:18 -y &>> $LOGFILE
-VALIDATE $? "enabling nodejs:18"
+
+dnf module enable nodejs:18 -y  &>> $LOGFILE
+
 
 dnf install nodejs -y  &>> $LOGFILE
-VALIDATE $? "installing nodejs"
 
 
-id roboshop
+dnf install nodejs -y  &>> $LOGFILE
+
+
+id roboshop  &>> $LOGFILE
 
 if [ $? -ne 0 ]
 then
@@ -50,32 +52,32 @@ else
 fi
 
 
-mkdir -p /app  &>> $LOGFILE
+mkdir -p /app  &>> $LOGFILE 
 VALIDATE $? "creating app directory"
 
-curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
-VALIDATE $? "downloading the cart" 
+curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
+VALIDATE $? "downloading cart"
+
+cd /app   &>> $LOGFILE
+VALIDATE $? "moving to app"
+
+unzip -o /tmp/cart.zip  &>> $LOGFILE
+VALIDATE $? "unzipping cart file"
 
 cd /app  &>> $LOGFILE
-VALIDATE $? "moving to app directory"
+VALIDATE $? "moving to app"
 
-unzip -o /tmp/cart.zip &>> $LOGFILE
-VALIDATE $? "unzipping the cart file"
+npm install  &>> $LOGFILE
+VALIDATE $? "installing dependencies"
 
-cd /app  &>> $LOGFILE
-VALIDATE $? "moving to app directory"
-
-npm install &>> $LOGFILE
-VALIDATE $? "installing cart server"
-
-cp /home/centos/roboshop-shell/cart.service  /etc/systemd/system/cart.service  &>> $LOGFILE
+cp /home/centos/roboshop-shell/cart.service   /etc/systemd/system/cart.service  &>> $LOGFILE
 VALIDATE $? "coping to cart.service"
 
-systemctl daemon-reload &>> $LOGFILE
+systemctl daemon-reload  &>> $LOGFILE
 VALIDATE $? "reloading daemon"
 
-systemctl enable cart &>> $LOGFILE
+systemctl enable cart  &>> $LOGFILE
 VALIDATE $? "enabling cart"
 
-systemctl start cart &>> $LOGFILE
+systemctl start cart  &>> $LOGFILE
 VALIDATE $? "starting cart"
