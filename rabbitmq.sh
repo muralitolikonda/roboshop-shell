@@ -44,6 +44,8 @@ VALIDATE $? "enabling rabbitmq server"
 systemctl start rabbitmq-server  &>> $LOGFILE
 VALIDATE $? "starting rabbitmq server"
 
+
+
 rabbitmqctl add_user roboshop roboshop123 &>> $LOGFILE
 VALIDATE $? "creating user and password for the rabbitmq server"
 
