@@ -30,13 +30,18 @@ else
 fi
 
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+VALIDATE $? "Downloading redis repo"
 
 dnf module enable redis:remi-6.2 -y
+VALIDATE $? "Enabling redis"
 
 dnf install redis -y
+VALIDATE $? "Installing redis"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf
 
 systemctl enable redis
+VALIDATE $? "Enabling redis"
 
 systemctl start redis
+VALIDATE $? "Starting redis"
