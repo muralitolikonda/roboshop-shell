@@ -48,41 +48,41 @@ else
     echo -e "roboshop user creation...$Y SKIPPING $N "
 fi
 
-mkdir -p /app
+mkdir -p /app &>> $LOGFILE
 VALIDATE $? "app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip  &>> $LOGFILE
 VALIDATE $? "Downloading the catalogue application"
 
 cd /app 
 
-unzip -o /tmp/catalogue.zip
+unzip -o /tmp/catalogue.zip  &>> $LOGFILE
 VALIDATE $? "unzipping the catalogue file"
 
 cd /app
 
-npm install 
+npm install  &>> $LOGFILE
 VALIDATE $? "Installing catalogue file"
 
-cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.service
+cp /home/centos/roboshop-shell/catalogue.service  /etc/systemd/system/catalogue.service  &>> $LOGFILE
 VALIDATE $? "Creating catalogue service"
 
-systemctl daemon-reload
+systemctl daemon-reload  &>> $LOGFILE
 VALIDATE $? "Reloading the catalogue file"
 
-systemctl enable catalogue
+systemctl enable catalogue &>> $LOGFILE
 VALIDATE $? "Enabling catalogue"
 
-systemctl start catalogue
+systemctl start catalogue  &>> $LOGFILE
 VALIDATE $? "Starting catalogue"
 
-cp /home/centos/roboshop-shell/mongo.repo  /etc/yum.repos.d/mongo.repo
+cp /home/centos/roboshop-shell/mongo.repo  /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
 VALIDATE $? "copied the mongo repo"
 
-dnf install mongodb-org-shell -y
+dnf install mongodb-org-shell -y  &>> $LOGFILE
 VALIDATE $? "Installing mongo shell"
 
-mongo --host mongodb.murralii.online </app/schema/catalogue.js
+mongo --host mongodb.murralii.online </app/schema/catalogue.js  &>> $LOGFILE
 VALIDATE $? "enabling remote access"
 
 
