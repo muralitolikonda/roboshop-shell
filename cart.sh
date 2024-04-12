@@ -60,7 +60,8 @@ VALIDATE $? "moving to app directory"
 unzip -o /tmp/cart.zip &>> $LOGFILE
 VALIDATE $? "unzipping the cart file"
 
-cd /app 
+cd /app  &>> $LOGFILE
+VALIDATE $? "moving to app directory"
 
 npm install &>> $LOGFILE
 VALIDATE $? "installing cart server"
